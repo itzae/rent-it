@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSubtitleLogin"
+        style="@style/Text.App.TextDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/enter_data_instruction_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEnterEmailOrNumber"
+        style="@style/Text.App.TextLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/enter_data_label"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitleLogin" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etEnterEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:backgroundTint="@drawable/selector_input_text"
+        android:hint="@string/hint_email_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEnterEmailOrNumber" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNextStep"
+        style="@style/Widget.App.FilledButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/next_step_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEnterEmail" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/or_label"
+        app:layout_constraintEnd_toEndOf="@+id/btnNextStep"
+        app:layout_constraintStart_toStartOf="@+id/btnNextStep"
+        app:layout_constraintTop_toBottomOf="@+id/btnNextStep" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateAccount"
+        style="@style/Widget.App.OutlineButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/create_account_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOr" />
+</androidx.constraintlayout.widget.ConstraintLayout>
