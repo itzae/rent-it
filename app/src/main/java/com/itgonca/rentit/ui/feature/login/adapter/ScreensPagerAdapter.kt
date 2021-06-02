@@ -1,4 +1,4 @@
-package com.itgonca.rentit.ui.adapter
+package com.itgonca.rentit.ui.feature.login.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

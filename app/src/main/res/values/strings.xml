@@ -7,8 +7,11 @@
     <string name="enter_data_label">Email or mobile number</string>
     <string name="hint_email_label">example@example.com</string>
     <string name="next_step_label">Next step</string>
+    <string name="register_label">Register</string>
     <string name="or_label">or</string>
     <string name="create_account_label">Create an account</string>
     <string name="login_label">Login</string>
+    <string name="email_label">Email</string>
     <string name="forgot_password_label">Forgot password</string>
+    <string name="create_account_instrucctions_label">Fill these form and jump to next step</string>
 </resources>

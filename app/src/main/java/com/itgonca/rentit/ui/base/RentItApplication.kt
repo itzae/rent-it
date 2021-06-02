@@ -1,4 +1,4 @@
-package com.itgonca.rentit.base
+package com.itgonca.rentit.ui.base
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
