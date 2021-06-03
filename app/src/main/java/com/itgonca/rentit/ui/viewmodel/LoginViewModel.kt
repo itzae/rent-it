@@ -82,6 +82,7 @@ class LoginViewModel @Inject constructor(private val firebaseAuthRepository: Fir
 
     private fun handleSuccessRegister(authResult: AuthResult) {
         _registerUser.value = StateUi.Success(authResult)
+        _isSessionActive.value = StateUi.Success(true)
     }
 
     private fun handleErrorRegister(failure: Failure) {

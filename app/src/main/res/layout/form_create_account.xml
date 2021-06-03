@@ -26,18 +26,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitleLogin" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etEnterEmail"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilEmail"
+        style="@style/Widget.App.InputUnderline"
+        app:endIconMode="custom"
+        app:endIconTint="@null"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginEnd="13dp"
-        android:backgroundTint="@drawable/selector_input_text"
-        android:hint="@string/hint_email_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEnterEmailOrNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEnterEmailOrNumber">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/hint_email_label" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvEnterPassword"
@@ -49,13 +57,16 @@
         android:text="@string/password_label"
         android:textAllCaps="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEnterEmail" />
+        app:layout_constraintTop_toBottomOf="@id/tilEmail" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilPassword"
-        style="@style/Widget.Design.TextInputLayout"
+        style="@style/Widget.App.InputUnderline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        app:errorIconDrawable="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,10 +76,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEnterPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp"
-            android:backgroundTint="@drawable/selector_input_text" />
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -76,6 +84,7 @@
         style="@style/Widget.App.FilledButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"

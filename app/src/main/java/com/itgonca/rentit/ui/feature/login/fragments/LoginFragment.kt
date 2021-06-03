@@ -10,10 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.AuthResult
+import com.itgonca.rentit.R
 import com.itgonca.rentit.databinding.FragmentLoginBinding
 import com.itgonca.rentit.ui.feature.login.adapter.ScreensPagerAdapter
 import com.itgonca.rentit.ui.feature.signin.CreateAccountFragment
 import com.itgonca.rentit.ui.viewmodel.LoginViewModel
+import com.itgonca.rentit.utils.extension.activityContext
+import com.itgonca.rentit.utils.extension.showAlert
+import com.itgonca.rentit.utils.functional.StateUi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,6 +73,7 @@ class LoginFragment : Fragment() {
     private fun initObserver() {
         viewModel.nextPage.observe(viewLifecycleOwner, ::navigateViewPager)
         viewModel.previousPage.observe(viewLifecycleOwner, ::navigateViewPager)
+        viewModel.registerUser.observe(viewLifecycleOwner, ::registerUser)
     }
 
     private fun initViewPager() {
@@ -89,6 +95,20 @@ class LoginFragment : Fragment() {
 
     private fun navigateViewPager(page: Int) {
         binding.viewPagerContainer.currentItem = page
+    }
+
+    private fun registerUser(state: StateUi<AuthResult>) {
+        when (state) {
+            StateUi.Loading -> activityContext().isShowLoader(true)
+            is StateUi.Success -> {
+                activityContext().isShowLoader(false)
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            }
+            is StateUi.Error -> {
+                activityContext().isShowLoader(false)
+                showAlert("Error", "El usuario ya existe")
+            }
+        }
     }
 
 }

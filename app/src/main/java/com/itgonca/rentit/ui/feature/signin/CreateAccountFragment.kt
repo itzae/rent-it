@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.firebase.auth.AuthResult
+import com.itgonca.rentit.R
 import com.itgonca.rentit.databinding.FormCreateAccountBinding
 import com.itgonca.rentit.ui.viewmodel.LoginViewModel
-import com.itgonca.rentit.utils.extension.activityContext
-import com.itgonca.rentit.utils.extension.showAlert
-import com.itgonca.rentit.utils.functional.StateUi
+import com.itgonca.rentit.utils.extension.isValidEmail
+import com.itgonca.rentit.utils.extension.resourceDrawable
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +20,9 @@ class CreateAccountFragment : Fragment() {
     private var _binding: FormCreateAccountBinding? = null
     private val binding
         get() = _binding!!
+
+    var email: String = ""
+    var password: String = ""
 
     private val viewModel: LoginViewModel by activityViewModels()
 
@@ -35,7 +38,6 @@ class CreateAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
-        initObserver()
     }
 
     override fun onDestroyView() {
@@ -45,27 +47,29 @@ class CreateAccountFragment : Fragment() {
 
     private fun initUi() {
         binding.btnRegister.setOnClickListener {
-            viewModel.register(
-                binding.etEnterEmail.text.toString(),
-                binding.etEnterPassword.text.toString()
-            )
+            viewModel.register(email, password)
+        }
+        binding.tilEmail.editText?.doAfterTextChanged { paramEmail ->
+            email = paramEmail?.toString() ?: ""
+            validateTextFields()
+        }
+        binding.tilPassword.editText?.doAfterTextChanged { paramPassword ->
+            password = paramPassword?.toString() ?: ""
+            validateTextFields()
         }
     }
 
-    private fun initObserver() {
-        viewModel.registerUser.observe(viewLifecycleOwner, ::registerUser)
-    }
-
-    private fun registerUser(state: StateUi<AuthResult>) {
-        when (state) {
-            StateUi.Loading -> activityContext().isShowLoader(true)
-            is StateUi.Success -> {
-                activityContext().isShowLoader(false)
-            }
-            is StateUi.Error -> {
-                activityContext().isShowLoader(false)
-                showAlert("Error", "El usuario ya existe")
-            }
+    private fun validateTextFields() {
+        val isValidEmail = email.isValidEmail() && password.isNotEmpty()
+        val isValidPassword = if (password.length < 6 && password.isNotEmpty()) {
+            binding.tilPassword.error = getString(R.string.password_length_error_label)
+            false
+        } else {
+            binding.tilPassword.error = null
+            true
         }
+        binding.btnRegister.isEnabled = isValidEmail && isValidPassword
+        binding.tilEmail.endIconDrawable =
+            if (email.isValidEmail()) resourceDrawable(R.drawable.ic_green_check_circle) else null
     }
 }

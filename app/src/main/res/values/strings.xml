@@ -14,4 +14,5 @@
     <string name="email_label">Email</string>
     <string name="forgot_password_label">Forgot password</string>
     <string name="create_account_instrucctions_label">Fill these form and jump to next step</string>
+    <string name="password_length_error_label">The password must be at least 6 characters long</string>
 </resources>

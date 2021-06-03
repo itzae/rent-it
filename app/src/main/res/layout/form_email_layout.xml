@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvSubtitleLogin"
         style="@style/Text.App.TextDisplay"
@@ -25,18 +26,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitleLogin" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etEnterEmail"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilEmail"
+        style="@style/Widget.App.InputUnderline"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginEnd="13dp"
-        android:backgroundTint="@drawable/selector_input_text"
-        android:hint="@string/hint_email_label"
+        app:endIconMode="custom"
+        app:endIconTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEnterEmailOrNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEnterEmailOrNumber">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_email_label"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNextStep"
@@ -49,7 +58,7 @@
         android:text="@string/next_step_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEnterEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/tilEmail" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvOr"
@@ -59,6 +68,7 @@
         app:layout_constraintEnd_toEndOf="@+id/btnNextStep"
         app:layout_constraintStart_toStartOf="@+id/btnNextStep"
         app:layout_constraintTop_toBottomOf="@+id/btnNextStep" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCreateAccount"
         style="@style/Widget.App.OutlineButton"
