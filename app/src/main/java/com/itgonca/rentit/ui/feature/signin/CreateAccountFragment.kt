@@ -49,6 +49,9 @@ class CreateAccountFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             viewModel.register(email, password)
         }
+        binding.ivArrowForward.setOnClickListener {
+            viewModel.actionNextPage(1)
+        }
         binding.tilEmail.editText?.doAfterTextChanged { paramEmail ->
             email = paramEmail?.toString() ?: ""
             validateTextFields()

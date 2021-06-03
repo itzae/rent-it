@@ -18,6 +18,7 @@ import com.itgonca.rentit.ui.feature.signin.CreateAccountFragment
 import com.itgonca.rentit.ui.viewmodel.LoginViewModel
 import com.itgonca.rentit.utils.extension.activityContext
 import com.itgonca.rentit.utils.extension.showAlert
+import com.itgonca.rentit.utils.functional.FirebaseFailure
 import com.itgonca.rentit.utils.functional.StateUi
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -74,6 +75,7 @@ class LoginFragment : Fragment() {
         viewModel.nextPage.observe(viewLifecycleOwner, ::navigateViewPager)
         viewModel.previousPage.observe(viewLifecycleOwner, ::navigateViewPager)
         viewModel.registerUser.observe(viewLifecycleOwner, ::registerUser)
+        viewModel.loginUser.observe(viewLifecycleOwner, ::loginUser)
     }
 
     private fun initViewPager() {
@@ -107,6 +109,23 @@ class LoginFragment : Fragment() {
             is StateUi.Error -> {
                 activityContext().isShowLoader(false)
                 showAlert("Error", "El usuario ya existe")
+            }
+        }
+    }
+
+    private fun loginUser(state: StateUi<AuthResult>) {
+        when (state) {
+            StateUi.Loading -> activityContext().isShowLoader(true)
+            is StateUi.Success -> {
+                activityContext().isShowLoader(false)
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            }
+            is StateUi.Error -> {
+                activityContext().isShowLoader(false)
+                if(state.failure == FirebaseFailure.PasswordInvalid)
+                    showAlert("Error","The password is invalid or the user does not have a password")
+                else
+                    showAlert("Error","User with this email not exist")
             }
         }
     }

@@ -26,15 +26,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSubtitleLogin" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivArrowForward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/tilEmail"
+        app:layout_constraintEnd_toEndOf="@+id/tilEmail"
+        app:srcCompat="@drawable/ic_arrow_forward" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilEmail"
         style="@style/Widget.App.InputUnderline"
-        app:endIconMode="custom"
-        app:endIconTint="@null"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginEnd="13dp"
+        app:endIconMode="custom"
+        app:endIconTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +51,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/hint_email_label" />
+            android:hint="@string/hint_email_label"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -76,7 +84,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEnterPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:digits="@string/alphanumeric"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -84,10 +96,10 @@
         style="@style/Widget.App.FilledButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:enabled="false"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:enabled="false"
         android:text="@string/register_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

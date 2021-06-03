@@ -1,5 +1,7 @@
 package com.itgonca.rentit.utils.functional
 
-class FirebaseFailure : Failure.CustomFailure() {
+sealed class FirebaseFailure : Failure.CustomFailure() {
     object EmailExist : Failure.CustomFailure()
+    object PasswordInvalid : Failure.CustomFailure()
+    object UserNotFound : Failure.CustomFailure()
 }

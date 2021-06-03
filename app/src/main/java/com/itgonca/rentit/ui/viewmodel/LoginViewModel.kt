@@ -30,15 +30,17 @@ class LoginViewModel @Inject constructor(private val firebaseAuthRepository: Fir
     val isSessionActive: LiveData<StateUi<Boolean>>
         get() = _isSessionActive
 
-    private var _loginUser = MutableLiveData<Boolean>()
+    private var _loginUser = MutableLiveData<StateUi<AuthResult>>()
 
-    val loginUser: LiveData<Boolean>
+    val loginUser: LiveData<StateUi<AuthResult>>
         get() = _loginUser
 
     private var _registerUser = MutableLiveData<StateUi<AuthResult>>()
 
     val registerUser: LiveData<StateUi<AuthResult>>
         get() = _registerUser
+
+    private var email: String = ""
 
     fun actionNextPage(page: Int) {
         _nextPage.value = page
@@ -57,11 +59,17 @@ class LoginViewModel @Inject constructor(private val firebaseAuthRepository: Fir
         }
     }
 
-    fun login(email: String, password: String) {
-        viewModelScope.launch {
-            val result = firebaseAuthRepository.login(email, password)
-            _loginUser.value = result != null
-        }
+    fun login(password: String) {
+        _loginUser.value = StateUi.Loading
+        if (email.isNotEmpty() && password.isNotEmpty())
+            viewModelScope.launch {
+                val result = firebaseAuthRepository.login(email, password)
+                result.eitther(::handleLoginError, ::handleLoginSuccess)
+            }
+    }
+
+    fun nextStepLogin(email: String) {
+        this.email = email
     }
 
     fun register(email: String, password: String) {
@@ -87,5 +95,14 @@ class LoginViewModel @Inject constructor(private val firebaseAuthRepository: Fir
 
     private fun handleErrorRegister(failure: Failure) {
         _registerUser.value = StateUi.Error(failure)
+    }
+
+    private fun handleLoginSuccess(userInfo: AuthResult) {
+        _loginUser.value = StateUi.Success(userInfo)
+        _isSessionActive.value = StateUi.Success(true)
+    }
+
+    private fun handleLoginError(error: Failure) {
+        _loginUser.value = StateUi.Error(error)
     }
 }

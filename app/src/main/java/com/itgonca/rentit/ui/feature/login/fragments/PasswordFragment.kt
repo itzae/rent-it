@@ -27,16 +27,23 @@ class PasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnCreateAccount.setOnClickListener {
-            viewModel.actionPreviousPage(1)
-        }
-        binding.ivArrowBack.setOnClickListener {
-            viewModel.actionPreviousPage(1)
-        }
+        initUi()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initUi() {
+        binding.btnLogin.setOnClickListener {
+            viewModel.login(binding.tilPassword.editText?.text.toString())
+        }
+        binding.btnForgotPassword.setOnClickListener {
+            viewModel.actionPreviousPage(1)
+        }
+        binding.ivArrowBack.setOnClickListener {
+            viewModel.actionPreviousPage(1)
+        }
     }
 }
