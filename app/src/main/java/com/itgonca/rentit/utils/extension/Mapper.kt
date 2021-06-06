@@ -3,6 +3,7 @@ package com.itgonca.rentit.utils.extension
 import com.itgonca.rentit.utils.functional.Either
 import com.itgonca.rentit.utils.functional.Failure
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 
 fun <R> R.toSuccess(): Either.Success<R> {
@@ -25,3 +26,4 @@ suspend inline fun <T> executCall(
         }
     }
 }
+

@@ -1,4 +1,4 @@
-package com.itgonca.rentit.data.remote
+package com.itgonca.rentit.data.remote.auth
 
 import com.google.firebase.auth.AuthResult
 import com.itgonca.rentit.utils.functional.Either

@@ -1,7 +1,7 @@
 package com.itgonca.rentit.di
 
+import com.itgonca.rentit.data.remote.repository.FirebaseAuthRepositoryImpl
 import com.itgonca.rentit.domain.repository.FirebaseAuthRepository
-import com.itgonca.rentit.domain.repository.FirebaseAuthRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

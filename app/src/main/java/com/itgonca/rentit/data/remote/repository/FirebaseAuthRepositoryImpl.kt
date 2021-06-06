@@ -1,7 +1,8 @@
-package com.itgonca.rentit.domain.repository
+package com.itgonca.rentit.data.remote.repository
 
 import com.google.firebase.auth.AuthResult
-import com.itgonca.rentit.data.remote.FirebaseAuthRemoteSource
+import com.itgonca.rentit.data.remote.auth.FirebaseAuthRemoteSource
+import com.itgonca.rentit.domain.repository.FirebaseAuthRepository
 import com.itgonca.rentit.utils.functional.Either
 import com.itgonca.rentit.utils.functional.Failure
 import javax.inject.Inject

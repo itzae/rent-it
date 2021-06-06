@@ -1,7 +1,7 @@
 package com.itgonca.rentit.di
 
-import com.itgonca.rentit.data.remote.FirebaseAuthRemoteSource
-import com.itgonca.rentit.data.remote.FirebaseAuthRemoteSourceImpl
+import com.itgonca.rentit.data.remote.auth.FirebaseAuthRemoteSource
+import com.itgonca.rentit.data.remote.auth.FirebaseAuthRemoteSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
