@@ -1,9 +1,11 @@
 package com.itgonca.rentit.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.getValue
 import com.itgonca.rentit.data.remote.model.Location
 import com.itgonca.rentit.domain.repository.FirebaseDatabaseRepository
@@ -25,19 +27,23 @@ class HomeViewModel @Inject constructor(private val databaseRepository: Firebase
         val listResult = mutableListOf<Location>()
         viewModelScope.launch {
             databaseRepository.getListLocations().map {
-                listResult.clear()
-                it.children.forEach { children ->
-                    listResult.add((children.getValue<Location>() as Location).apply {
-                        id = children.key?.toInt() ?: 0
-                    })
-                }
-                listResult
-            }.catch {
-
+                successList(it, listResult)
+            }.catch { e ->
+                Log.d("TAG", "getListLocations: $e")
             }.collect {
                 _listLocations.value = it
             }
 
         }
+    }
+
+    private fun successList(data: DataSnapshot, listResult: MutableList<Location>): List<Location> {
+        listResult.clear()
+        data.children.forEach { children ->
+            listResult.add((children.getValue<Location>() as Location).apply {
+                id = children.key?.toInt() ?: 0
+            })
+        }
+        return listResult
     }
 }
