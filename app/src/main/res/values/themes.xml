@@ -29,6 +29,12 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <style name="Text.App.TextH3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">@font/sf_pro_display_bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="Text.App.TextH4" parent="TextAppearance.MaterialComponents.Caption">
         <item name="fontFamily">@font/sf_pro_display_bold</item>
         <item name="android:textColor">@color/black</item>
@@ -40,6 +46,12 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="Text.App.BodySmall" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/sf_pro_display_regular</item>
+        <item name="lineHeight">20dp</item>
+        <item name="android:textColor">@color/gray_color_100</item>
     </style>
 
 

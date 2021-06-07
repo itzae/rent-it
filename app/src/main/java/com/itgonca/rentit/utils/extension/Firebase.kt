@@ -6,7 +6,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.itgonca.rentit.utils.functional.Failure
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
@@ -41,14 +40,8 @@ suspend fun DatabaseReference.awaitSingleEvent(): DataSnapshot? =
 
 suspend fun DatabaseReference.awaitMultipleEvent(): Flow<DataSnapshot> = callbackFlow {
     val valueEventListener = object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) = this@callbackFlow.sendBlocking(snapshot.toSuccess())
-        override fun onCancelled(error: DatabaseError) = run {
-            val exception = when(error.toException()) {
-                is DatabaseError -> error.toError() as Failure
-                else -> Exception("The Firebase call for reference $this was cancelled").parseError().toError()
-            }
-            this@callbackFlow.sendBlocking(exception)
-        }
+        override fun onDataChange(snapshot: DataSnapshot) = sendBlocking(snapshot)
+        override fun onCancelled(error: DatabaseError) = sendBlocking(error)
     }
     addValueEventListener(valueEventListener)
     awaitClose { removeEventListener(valueEventListener) }
