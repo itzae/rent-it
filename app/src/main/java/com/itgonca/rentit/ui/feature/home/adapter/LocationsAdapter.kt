@@ -37,7 +37,7 @@ class LocationsAdapter :
 
 private class DiffUtilLocationCallback : DiffUtil.ItemCallback<Location>() {
     override fun areItemsTheSame(oldItem: Location, newItem: Location): Boolean =
-        oldItem.name == newItem.name
+        oldItem.id == newItem.id
 
 
     override fun areContentsTheSame(oldItem: Location, newItem: Location): Boolean =

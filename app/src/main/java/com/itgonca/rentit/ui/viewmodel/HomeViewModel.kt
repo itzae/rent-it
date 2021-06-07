@@ -27,7 +27,9 @@ class HomeViewModel @Inject constructor(private val databaseRepository: Firebase
             databaseRepository.getListLocations().map {
                 listResult.clear()
                 it.children.forEach { children ->
-                    listResult.add(children.getValue<Location>() as Location)
+                    listResult.add((children.getValue<Location>() as Location).apply {
+                        id = children.key?.toInt() ?: 0
+                    })
                 }
                 listResult
             }.catch {
