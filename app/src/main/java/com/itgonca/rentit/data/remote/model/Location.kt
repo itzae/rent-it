@@ -8,5 +8,8 @@ data class Location(
     val name: String = "",
     val price: Double = 0.0,
     val image: String = "",
-    val likes: Int = 0
+    val likes: Int = 0,
+    val isFavorite: Boolean = false,
+    val checkboxPreviousState: Boolean = false,
+    var checkboxCurrentState: Boolean = checkboxPreviousState
 )

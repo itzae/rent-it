@@ -1,6 +1,7 @@
 package com.itgonca.rentit.ui.feature.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class HomeFragment : Fragment() {
     private fun initObserver() {
         loginViewModel.isSessionActive.observe(viewLifecycleOwner, ::validateSession)
         homeViewModel.listLocations.observe(viewLifecycleOwner){
+            Log.d("TAG", "initObserver: List $it")
             locationsAdapter.submitList(it)
             binding.rvLocations.adapter = locationsAdapter
         }

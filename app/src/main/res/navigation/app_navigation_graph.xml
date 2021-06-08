@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.itgonca.rentit.ui.feature.login.fragments.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -35,5 +35,10 @@
         android:id="@+id/loaderDialog"
         android:name="com.itgonca.rentit.utils.view.LoaderDialog"
         android:label="LoaderDialog"
-        tools:layout="@layout/dialog_loader"/>
+        tools:layout="@layout/dialog_loader" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.itgonca.rentit.ui.feature.favorites.FavoritesFragment"
+        android:label="FavoritesFragment"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>

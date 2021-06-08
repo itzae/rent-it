@@ -23,14 +23,28 @@ class LocationsAdapter :
         holder.bind(location)
     }
 
-    inner class LocationsViewHolder(val binding: ItemLocationLayoutBinding) :
+    override fun onViewRecycled(holder: LocationsViewHolder) {
+        super.onViewRecycled(holder)
+        holder.unbind()
+    }
+
+    inner class LocationsViewHolder(private val binding: ItemLocationLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(itemLocation: Location) {
             with(itemLocation) {
                 binding.ivImageLocation.loadImageUrl(image)
                 binding.tvNameLocation.text = name
                 binding.tvPrice.text = "$$price"
+                binding.btnFavorite.isChecked = checkboxCurrentState
+                binding.btnFavorite.setOnCheckedChangeListener { _, isChecked ->
+                    checkboxCurrentState = isChecked
+                }
             }
+        }
+
+        fun unbind() {
+            binding.btnFavorite.setOnCheckedChangeListener(null)
+            binding.btnFavorite.isChecked = false
         }
     }
 }

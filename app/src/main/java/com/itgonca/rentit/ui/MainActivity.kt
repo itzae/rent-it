@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.itgonca.rentit.R
 import com.itgonca.rentit.databinding.ActivityMainBinding
 import com.itgonca.rentit.ui.base.BaseActivity
@@ -32,6 +33,7 @@ class MainActivity : BaseActivity() {
     private fun initComponents(){
         dialogLoader = LoaderDialog.newInstance()
         navController = Navigation.findNavController(this, R.id.navHostContainer)
+        NavigationUI.setupWithNavController(binding.bottomNav,navController!!)
         hideStatusBar()
     }
 
