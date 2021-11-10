@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ktx.getValue
 import com.itgonca.rentit.data.remote.model.Location
 import com.itgonca.rentit.domain.repository.FirebaseDatabaseRepository
+import com.itgonca.rentit.utils.functional.Failure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -37,10 +37,26 @@ class HomeViewModel @Inject constructor(private val databaseRepository: Firebase
         }
     }
 
+    fun updateFavorite(idUser:String,idLocation: Int,isFavorite:Boolean){
+        viewModelScope.launch {
+            val result = databaseRepository.updateFavoriteLocation(idUser,idLocation,isFavorite)
+            result.eitther(::errorUpdate,::completeUpdate)
+
+        }
+    }
+
+    private fun completeUpdate(void: Void?) {
+
+    }
+
+    private fun errorUpdate(failure: Failure) {
+
+    }
+
     private fun successList(data: DataSnapshot, listResult: MutableList<Location>): List<Location> {
         listResult.clear()
         data.children.forEach { children ->
-            listResult.add((children.getValue<Location>() as Location).apply {
+            listResult.add((children.getValue(Location::class.java)!!).apply {
                 id = children.key?.toInt() ?: 0
             })
         }

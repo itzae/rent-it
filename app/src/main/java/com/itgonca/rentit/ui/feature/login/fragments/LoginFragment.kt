@@ -11,14 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.AuthResult
-import com.itgonca.rentit.R
 import com.itgonca.rentit.databinding.FragmentLoginBinding
 import com.itgonca.rentit.ui.feature.login.adapter.ScreensPagerAdapter
 import com.itgonca.rentit.ui.feature.signin.CreateAccountFragment
 import com.itgonca.rentit.ui.viewmodel.LoginViewModel
-import com.itgonca.rentit.utils.extension.activityContext
-import com.itgonca.rentit.utils.extension.showAlert
-import com.itgonca.rentit.utils.functional.FirebaseFailure
 import com.itgonca.rentit.utils.functional.StateUi
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -100,7 +96,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun registerUser(state: StateUi<AuthResult>) {
-        when (state) {
+      /*  when (state) {
             StateUi.Loading -> activityContext().isShowLoader(true)
             is StateUi.Success -> {
                 activityContext().isShowLoader(false)
@@ -110,11 +106,11 @@ class LoginFragment : Fragment() {
                 activityContext().isShowLoader(false)
                 showAlert("Error", "El usuario ya existe")
             }
-        }
+        }*/
     }
 
     private fun loginUser(state: StateUi<AuthResult>) {
-        when (state) {
+       /* when (state) {
             StateUi.Loading -> activityContext().isShowLoader(true)
             is StateUi.Success -> {
                 activityContext().isShowLoader(false)
@@ -127,7 +123,7 @@ class LoginFragment : Fragment() {
                 else
                     showAlert("Error","User with this email not exist")
             }
-        }
+        }*/
     }
 
 }

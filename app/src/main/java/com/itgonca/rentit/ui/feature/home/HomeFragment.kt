@@ -8,19 +8,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.itgonca.rentit.R
+import com.google.firebase.auth.FirebaseAuth
 import com.itgonca.rentit.databinding.FragmentHomeBinding
 import com.itgonca.rentit.ui.feature.home.adapter.LocationsAdapter
 import com.itgonca.rentit.ui.viewmodel.HomeViewModel
 import com.itgonca.rentit.ui.viewmodel.LoginViewModel
-import com.itgonca.rentit.utils.extension.activityContext
 import com.itgonca.rentit.utils.functional.StateUi
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+
+
+    @Inject
+    lateinit var firebaseUser: FirebaseAuth
+
     private var _binding: FragmentHomeBinding? = null
     private val binding
         get() = _binding!!
@@ -30,7 +34,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        locationsAdapter = LocationsAdapter()
+        locationsAdapter = LocationsAdapter(::updateFavoriteLocation)
     }
 
     override fun onCreateView(
@@ -52,7 +56,7 @@ class HomeFragment : Fragment() {
 
     private fun initObserver() {
         loginViewModel.isSessionActive.observe(viewLifecycleOwner, ::validateSession)
-        homeViewModel.listLocations.observe(viewLifecycleOwner){
+        homeViewModel.listLocations.observe(viewLifecycleOwner) {
             Log.d("TAG", "initObserver: List $it")
             locationsAdapter.submitList(it)
             binding.rvLocations.adapter = locationsAdapter
@@ -60,7 +64,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun validateSession(state: StateUi<Boolean>) {
-        when (state) {
+       /* when (state) {
             StateUi.Loading -> activityContext().isShowLoader(true)
             is StateUi.Success -> {
                 activityContext().isShowLoader(false)
@@ -69,6 +73,10 @@ class HomeFragment : Fragment() {
                 }
             }
             is StateUi.Error -> activityContext().isShowLoader(false)
-        }
+        }*/
+    }
+
+    private fun updateFavoriteLocation(idLocation: Int, isFavorite: Boolean) {
+        homeViewModel.updateFavorite(firebaseUser.currentUser?.uid ?: "anonimo", idLocation, isFavorite)
     }
 }

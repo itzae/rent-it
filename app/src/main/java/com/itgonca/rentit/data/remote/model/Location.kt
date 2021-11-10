@@ -9,7 +9,7 @@ data class Location(
     val price: Double = 0.0,
     val image: String = "",
     val likes: Int = 0,
-    val isFavorite: Boolean = false,
+    val favorite: Boolean = false,
     val checkboxPreviousState: Boolean = false,
     var checkboxCurrentState: Boolean = checkboxPreviousState
 )

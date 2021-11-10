@@ -16,4 +16,5 @@
     <string name="create_account_instrucctions_label">Fill these form and jump to next step</string>
     <string name="password_length_error_label">The password must be at least 6 characters long</string>
     <string name="alphanumeric">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="invalid_password_label">Password invalid</string>
 </resources>

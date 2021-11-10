@@ -9,7 +9,7 @@ import com.itgonca.rentit.data.remote.model.Location
 import com.itgonca.rentit.databinding.ItemLocationLayoutBinding
 import com.itgonca.rentit.utils.extension.loadImageUrl
 
-class LocationsAdapter :
+class LocationsAdapter(val onFavoriteClick: (Int, Boolean) -> Unit) :
     ListAdapter<Location, LocationsAdapter.LocationsViewHolder>(DiffUtilLocationCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationsViewHolder {
@@ -32,12 +32,14 @@ class LocationsAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(itemLocation: Location) {
             with(itemLocation) {
+                checkboxCurrentState = favorite
                 binding.ivImageLocation.loadImageUrl(image)
                 binding.tvNameLocation.text = name
                 binding.tvPrice.text = "$$price"
                 binding.btnFavorite.isChecked = checkboxCurrentState
                 binding.btnFavorite.setOnCheckedChangeListener { _, isChecked ->
                     checkboxCurrentState = isChecked
+                    onFavoriteClick(id, checkboxCurrentState)
                 }
             }
         }

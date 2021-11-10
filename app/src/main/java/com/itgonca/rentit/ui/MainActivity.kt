@@ -1,46 +1,67 @@
 package com.itgonca.rentit.ui
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.itgonca.rentit.R
 import com.itgonca.rentit.databinding.ActivityMainBinding
-import com.itgonca.rentit.ui.base.BaseActivity
-import com.itgonca.rentit.ui.viewmodel.LoginViewModel
-import com.itgonca.rentit.utils.extension.hideStatusBar
+import com.itgonca.rentit.ui.compose.screens.LoginScreen
+import com.itgonca.rentit.ui.compose.theme.RentItTheme
+import com.itgonca.rentit.ui.viewmodel.MainViewModel
 import com.itgonca.rentit.utils.view.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
+class MainActivity : ComponentActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
     private var navController: NavController? = null
     private var dialogLoader: LoaderDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        setContent {
+            val email by viewModel.email.collectAsState()
+            val password by viewModel.password.collectAsState()
+            val step by viewModel.step.collectAsState()
+            RentItTheme {
+                LoginScreen(
+                    email = email,
+                    password = password,
+                    step = step,
+                    onEmailChange = { viewModel.onEmailChange(it) },
+                    onPasswordChange = { viewModel.onPasswordChange(it) },
+                    onStepChange = { viewModel.onStepChange(it) }
+                )
+            }
+        }
+        /*binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initComponents()
-        viewModel.isSessionActive()
+        viewModel.isSessionActive()*/
     }
 
-    private fun initComponents(){
+    private fun initComponents() {
         dialogLoader = LoaderDialog.newInstance()
         navController = Navigation.findNavController(this, R.id.navHostContainer)
-        NavigationUI.setupWithNavController(binding.bottomNav,navController!!)
-        hideStatusBar()
+        NavigationUI.setupWithNavController(binding.bottomNav, navController!!)
+        //hideStatusBar()
     }
 
-    override fun isShowLoader(isShow: Boolean) {
+    /*override fun isShowLoader(isShow: Boolean) {
         if (isShow)
            dialogLoader?.show(supportFragmentManager,"Loader")
         else
             dialogLoader?.dismiss()
-    }
+    }*/
 }
