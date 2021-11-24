@@ -1,11 +1,13 @@
 package com.itgonca.rentit.ui.compose.screens
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import com.itgonca.rentit.ui.compose.theme.LightGrey100
 import com.itgonca.rentit.ui.compose.theme.Success100
 import com.itgonca.rentit.utils.extension.isValidEmail
 
+@ExperimentalAnimationApi
 @Composable
 fun SectionCredentialsScreen(
     modifier: Modifier = Modifier,
@@ -32,10 +35,12 @@ fun SectionCredentialsScreen(
     onPasswordChange: (String) -> Unit,
     onStepChange: (Int) -> Unit,
 ) {
+    val scrollState = rememberScrollState()
     Column(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp)
+            .verticalScroll(scrollState)
     ) {
         Text(
             text = "Welcome back!",
@@ -46,38 +51,57 @@ fun SectionCredentialsScreen(
             text = "Enter your email or number",
             style = MaterialTheme.typography.caption.copy(color = Grey100)
         )
-        Text(
-            text = "EMAIL OR MOBILE NUMBER",
-            style = MaterialTheme.typography.subtitle1,
-            modifier = Modifier.padding(top = 16.dp)
-        )
-        when (step) {
-            1 -> {
-                FieldText(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    valueText = email,
-                    onTextChange = onEmailChange,
-                    placeholder = "example@example.com",
-                    iconEnd = if (email.isValidEmail()) {
-                        {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_green_check_circle),
-                                contentDescription = "Check email", tint = Success100
+
+        AnimatedContent(
+            targetState = step,
+            transitionSpec = {
+                if (targetState > initialState) {
+                    slideInHorizontally({ width -> width }) + fadeIn() with
+                            slideOutHorizontally({ width -> -width }) + fadeOut()
+                } else {
+                    slideInHorizontally({ width -> -width }) + fadeIn() with
+                            slideOutHorizontally({ width -> width }) + fadeOut()
+                }.using(
+                    SizeTransform(clip = false)
+                )
+            }) { currentStep ->
+            when (currentStep) {
+                1 -> {
+                    FieldText(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        valueText = email,
+                        onTextChange = onEmailChange,
+                        placeholder = "example@example.com",
+                        iconEnd = if (email.isValidEmail()) {
+                            {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_green_check_circle),
+                                    contentDescription = "Check email", tint = Success100
+                                )
+                            }
+                        } else null,
+                        style = MaterialTheme.typography.caption,
+                        labelText = {
+                            Text(
+                                text = "EMAIL OR MOBILE NUMBER",
+                                style = MaterialTheme.typography.subtitle1,
+                                modifier = Modifier.padding(0.dp)
                             )
                         }
-                    } else null,
-                    style = MaterialTheme.typography.caption
-                )
-            }
-            2 -> {
-                PasswordInput(
-                    password = password,
-                    onPasswordChange = { onPasswordChange(it) },
-                    modifier = Modifier.fillMaxWidth(),
-                    messageError = stringResource(id = R.string.invalid_password_label),
-                    placeholder = stringResource(id = R.string.password_label)
-                )
+                    )
+                }
+                2 -> {
+
+                    PasswordInput(
+                        password = password,
+                        onPasswordChange = { onPasswordChange(it) },
+                        modifier = Modifier.fillMaxWidth(),
+                        messageError = stringResource(id = R.string.invalid_password_label),
+                        placeholder = stringResource(id = R.string.password_label)
+                    )
+
+                }
             }
         }
 
@@ -86,9 +110,9 @@ fun SectionCredentialsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
-            onClick = { if (step == 1) onStepChange(2) else onStepChange(3) },
+            onClick = { if (step == 1) onStepChange(2) else onStepChange(1) },
             shape = RoundedCornerShape(60.dp),
-            enabled = if(step == 1) email.isValidEmail() else email.isNotEmpty() && password.isNotEmpty()
+            enabled = if (step == 1) email.isValidEmail() else email.isNotEmpty() && password.isNotEmpty()
         ) {
             Text(
                 text = if (step == 1) "Next step" else "Login",
@@ -104,8 +128,14 @@ fun SectionCredentialsScreen(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.caption.copy(color = Grey100)
         )
+        OutlinedTextField(value = "", onValueChange = {
+
+        })
         OutlinedButton(
-            onClick = { /*TODO*/ }, modifier = Modifier
+            onClick = {
+                if (step == 1)
+                    onStepChange(3)
+            }, modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
             shape = RoundedCornerShape(60.dp), border = BorderStroke(2.dp, LightGrey100)
@@ -116,5 +146,6 @@ fun SectionCredentialsScreen(
                 style = MaterialTheme.typography.h4
             )
         }
+
     }
 }

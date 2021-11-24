@@ -1,6 +1,8 @@
 package com.itgonca.rentit.utils.extension
 
 import android.graphics.drawable.Drawable
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -15,6 +17,8 @@ fun Fragment.showAlert(title: String, message: String) {
         }.show()
 }
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
 fun Fragment.activityContext() = (activity as MainActivity)
 
 fun Fragment.resourceDrawable(res: Int): Drawable? =

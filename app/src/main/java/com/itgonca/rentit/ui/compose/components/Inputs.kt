@@ -12,7 +12,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.itgonca.rentit.ui.compose.theme.LightGrey100
 
 @Composable
 fun FieldText(
@@ -25,7 +24,7 @@ fun FieldText(
     style: TextStyle = TextStyle(),
     iconStart: (@Composable () -> Unit)? = null,
     iconEnd: (@Composable () -> Unit)? = null,
-    labelText: @Composable () -> Unit = {}
+    labelText: (@Composable () -> Unit)? = null
 ) {
     TextField(
         value = valueText,
@@ -42,6 +41,7 @@ fun FieldText(
         visualTransformation = visualTransformationField,
         textStyle = style,
     )
+
 }
 
 
@@ -77,7 +77,13 @@ fun PasswordInput(
             },
             visualTransformationField =
             if (!isPasswordShow) PasswordVisualTransformation('\u26AB') else VisualTransformation.None,
-            style = MaterialTheme.typography.caption.copy(color = LightGrey100)
+            style = MaterialTheme.typography.caption,
+            labelText =  {
+                Text(
+                    text = "PASSWORD",
+                    style = MaterialTheme.typography.subtitle1
+                )
+            }
         )
     }
 }

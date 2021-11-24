@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
@@ -18,8 +20,10 @@ import com.itgonca.rentit.ui.viewmodel.MainViewModel
 import com.itgonca.rentit.utils.view.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@Suppress("DEPRECATION")
 class MainActivity : ComponentActivity() {
 
     private lateinit var binding: ActivityMainBinding
