@@ -21,4 +21,6 @@
     <string name="content_description_search_bar">Search bar of locations</string>
     <string name="content_description_icon_filter">Icon filter</string>
     <string name="content_description_image_location">Image location</string>
+    <string name="search_city_label">Search via City</string>
+    <string name="footer_label">Others offers</string>
 </resources>

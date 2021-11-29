@@ -3,6 +3,7 @@ package com.itgonca.rentit.ui.compose.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -103,10 +104,97 @@ fun LodgingItem(location: Location) {
     }
 }
 
+@Composable
+fun LodgingRowItem(location: Location) {
+    var isFavoriteLocation by remember {
+        mutableStateOf(location.favorite)
+    }
+    Box(modifier = Modifier.size(280.dp,150.dp).padding(end = 8.dp)) {
+        Image(
+            painter = painterResource(id = R.drawable.image_lodging),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(5.dp))
+        )
+
+        Text(
+            text = "2.3 miles",
+            modifier = Modifier
+                .padding(16.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(Red100)
+                .padding(start = 16.dp, end = 16.dp),
+            style = MaterialTheme.typography.caption.copy(color = Color.White)
+        )
+        IconButton(
+            onClick = { isFavoriteLocation = !isFavoriteLocation },
+            modifier = Modifier.align(Alignment.TopEnd)
+        ) {
+            Image(
+                painter = painterResource(id = if (isFavoriteLocation) R.drawable.ic_favorite_fill else R.drawable.ic_favorite_regular),
+                contentDescription = null
+            )
+        }
+        Column(
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .align(Alignment.BottomStart)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = location.name,
+                    style = MaterialTheme.typography.h3.copy(color = Color.White)
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_gray_location),
+                    contentDescription = "",
+                    tint = Grey100,
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .size(8.dp, 9.dp)
+                )
+                Text(
+                    text = "Los Angeles",
+                    style = MaterialTheme.typography.body1.copy(color = Color.White)
+                )
+            }
+        }
+
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun LodgingItemCard() {
     RentItTheme {
         LodgingItem(Location(1, "Suny apartment", 233.0, "", 12))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LodgingRowItemCard() {
+    RentItTheme {
+        LazyRow(content = {
+            items(4) {
+                LodgingRowItem(
+                    Location(
+                        1,
+                        "Suny apartment",
+                        233.0,
+                        "",
+                        12
+                    )
+                )
+            }
+        })
     }
 }
