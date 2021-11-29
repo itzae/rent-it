@@ -18,4 +18,7 @@
     <string name="alphanumeric">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="invalid_password_label">Password invalid</string>
     <string name="example_preview_label">itzaeg@gmail.com</string>
+    <string name="content_description_search_bar">Search bar of locations</string>
+    <string name="content_description_icon_filter">Icon filter</string>
+    <string name="content_description_image_location">Image location</string>
 </resources>

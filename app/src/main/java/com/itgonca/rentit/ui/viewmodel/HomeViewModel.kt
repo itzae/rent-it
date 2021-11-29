@@ -1,27 +1,35 @@
 package com.itgonca.rentit.ui.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
 import com.itgonca.rentit.data.remote.model.Location
+import com.itgonca.rentit.domain.repository.FirebaseAuthRepository
 import com.itgonca.rentit.domain.repository.FirebaseDatabaseRepository
 import com.itgonca.rentit.utils.functional.Failure
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val databaseRepository: FirebaseDatabaseRepository) :
+class HomeViewModel @Inject constructor(
+    private val databaseRepository: FirebaseDatabaseRepository,
+    private val firebaseAuthRepository: FirebaseAuthRepository
+) :
     ViewModel() {
 
-    private var _listLocations = MutableLiveData<List<Location>>()
-    val listLocations: LiveData<List<Location>> get() = _listLocations
+    private var _listLocations = MutableStateFlow<List<Location>>(emptyList())
+    val listLocations: StateFlow<List<Location>> get() = _listLocations
+
+
+    private fun login() {
+        viewModelScope.launch {
+            firebaseAuthRepository.login("itzaeg@gmail.com", "chay9403")
+            //result.eitther(::handleLoginError, ::handleLoginSuccess)
+        }
+    }
 
     fun getListLocations() {
         val listResult = mutableListOf<Location>()
@@ -37,10 +45,10 @@ class HomeViewModel @Inject constructor(private val databaseRepository: Firebase
         }
     }
 
-    fun updateFavorite(idUser:String,idLocation: Int,isFavorite:Boolean){
+    fun updateFavorite(idUser: String, idLocation: Int, isFavorite: Boolean) {
         viewModelScope.launch {
-            val result = databaseRepository.updateFavoriteLocation(idUser,idLocation,isFavorite)
-            result.eitther(::errorUpdate,::completeUpdate)
+            val result = databaseRepository.updateFavoriteLocation(idUser, idLocation, isFavorite)
+            result.eitther(::errorUpdate, ::completeUpdate)
 
         }
     }
@@ -62,4 +70,6 @@ class HomeViewModel @Inject constructor(private val databaseRepository: Firebase
         }
         return listResult
     }
+
+    fun getFilters() = listOf("3 Guests", "Apartment", "WIFI", "Restaurant", "A/C")
 }

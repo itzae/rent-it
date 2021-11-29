@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.itgonca.rentit.R
+import com.itgonca.rentit.ui.compose.screens.login.SectionCredentialsScreen
+import com.itgonca.rentit.ui.compose.screens.login.SignUpScreen
 import com.itgonca.rentit.ui.compose.theme.RentItTheme
 
 @ExperimentalMaterialApi

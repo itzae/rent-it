@@ -1,4 +1,4 @@
-package com.itgonca.rentit.ui.compose.screens
+package com.itgonca.rentit.ui.compose.screens.login
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke

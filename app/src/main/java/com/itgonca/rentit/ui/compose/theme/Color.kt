@@ -29,18 +29,18 @@ val Success80 = Color(0xCC53D769)
 val Success60 = Color(0x9953D769)
 val Success40 = Color(0x6653D769)
 val Success20 = Color(0x3353D769)
-val Error100 = Color(0xFFEC6B6C)
-val Error80 = Color(0xCCEC6B6C)
-val Error60 = Color(0x99EC6B6C)
-val Error40 = Color(0x66EC6B6C)
-val Error20 = Color(0x33EC6B6C)
+val Red100 = Color(0xFFEC6B6C)
+val Red80 = Color(0xCCEC6B6C)
+val Red60 = Color(0x99EC6B6C)
+val Red40 = Color(0x66EC6B6C)
+val Red20 = Color(0x33EC6B6C)
 
 val RentItLightColors = lightColors(
     primary = Blue100,
     onPrimary = Color.White,
     secondary = Color.White,
     onSecondary = Color.White,
-    error = Error100,
+    error = Red100,
     onError = Color.White,
     onSurface = Dark100
 )
