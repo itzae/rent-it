@@ -71,7 +71,8 @@ fun SearchBar(
 @Composable
 fun SearchBarWithButton(
     state: EditableInputState = rememberEditableInputState(hint = ""),
-    listFilters: List<String>
+    listFilters: List<String>,
+    isFilterBarShow: Boolean = true
 ) {
     Surface(
         modifier = Modifier
@@ -100,11 +101,12 @@ fun SearchBarWithButton(
                 }
                 SearchBar(state = state)
             }
-            SearchFilters(
-                listFilters = listFilters, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            )
+            if(isFilterBarShow)
+                SearchFilters(
+                    listFilters = listFilters, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
         }
     }
 

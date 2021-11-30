@@ -10,22 +10,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.itgonca.rentit.ui.compose.screens.favorites.FavoritesScreen
 import com.itgonca.rentit.ui.compose.screens.home.HomeScreen
 import com.itgonca.rentit.ui.viewmodel.HomeViewModel
 
 @Composable
 fun BottomNavGraph(navController: NavHostController, innerPaddingValues: PaddingValues) {
+    val viewModel: HomeViewModel = hiltViewModel()
+    val listLocations by viewModel.listLocations.collectAsState()
     NavHost(navController = navController, startDestination = BottomBarScreens.Home.route) {
         composable(route = BottomBarScreens.Home.route) {
-            val viewModel: HomeViewModel = hiltViewModel()
-            val listLocations by viewModel.listLocations.collectAsState()
             HomeScreen(
                 listLocations = listLocations,
                 modifier = Modifier.padding(innerPaddingValues)
             )
         }
         composable(route = BottomBarScreens.Favorites.route) {
-            HomeScreen(listLocations = emptyList())
+            val listLocationsFavorites = listLocations.filter { it.favorite }
+
+            FavoritesScreen(
+                modifier = Modifier.padding(innerPaddingValues),
+                listLocations = listLocationsFavorites
+            )
         }
+        composable(route = BottomBarScreens.Chat.route){}
+        composable(route = BottomBarScreens.Profile.route){}
     }
 }

@@ -1,5 +1,7 @@
-package com.itgonca.rentit.ui.feature
+package com.itgonca.rentit.ui.compose.screens
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
@@ -9,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -35,6 +38,15 @@ fun MainScreen(
     val searchBarState =
         rememberEditableInputState(hint = stringResource(id = R.string.search_city_label))
 
+    var isFilterBarShow by remember {
+        mutableStateOf(true)
+    }
+
+    val appBarSize: Dp by animateDpAsState(
+        targetValue = if (isFilterBarShow) 120.dp else 56.dp,
+        animationSpec = tween(500)
+    )
+
     val currentOnQueryChanged by rememberUpdatedState(onQueryChange)
     LaunchedEffect(searchBarState) {
         snapshotFlow { searchBarState.text }
@@ -43,14 +55,19 @@ fun MainScreen(
                 currentOnQueryChanged(searchBarState.text)
             }
     }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 backgroundColor = Color.White,
                 elevation = 0.dp,
-                modifier = Modifier.height(120.dp)
+                modifier = Modifier.height(appBarSize)
             ) {
-                SearchBarWithButton(searchBarState, listFilters = listFilters)
+                SearchBarWithButton(
+                    searchBarState,
+                    listFilters = listFilters,
+                    isFilterBarShow = isFilterBarShow
+                )
             }
         },
         content = { innerPadding ->
@@ -59,12 +76,17 @@ fun MainScreen(
         bottomBar = {
             BottomBar(
                 navController = navController
-            )
+            ) { currentDestination ->
+                isFilterBarShow = when (currentDestination?.route) {
+                    BottomBarScreens.Home.route -> true
+                    else -> false
+                }
+            }
         })
 }
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBar(navController: NavHostController, onDestinationChange: (NavDestination?) -> Unit) {
     val listScreens = listOf(
         BottomBarScreens.Home,
         BottomBarScreens.Favorites,
@@ -82,6 +104,7 @@ fun BottomBar(navController: NavHostController) {
             )
         }
     }
+    onDestinationChange(currentDestination)
 }
 
 @Composable

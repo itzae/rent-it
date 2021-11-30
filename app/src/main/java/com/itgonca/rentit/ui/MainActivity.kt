@@ -11,8 +11,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.itgonca.rentit.R
 import com.itgonca.rentit.databinding.ActivityMainBinding
+import com.itgonca.rentit.ui.compose.screens.MainScreen
 import com.itgonca.rentit.ui.compose.theme.RentItTheme
-import com.itgonca.rentit.ui.feature.MainScreen
 import com.itgonca.rentit.ui.viewmodel.HomeViewModel
 import com.itgonca.rentit.utils.view.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint

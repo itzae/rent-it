@@ -37,6 +37,10 @@ class HomeViewModel @Inject constructor(private val databaseRepository: Firebase
         }
     }
 
+    fun getFavoritesLocations(){
+
+    }
+
     fun updateFavorite(idUser: String, idLocation: Int, isFavorite: Boolean) {
         viewModelScope.launch {
             val result = databaseRepository.updateFavoriteLocation(idUser, idLocation, isFavorite)
