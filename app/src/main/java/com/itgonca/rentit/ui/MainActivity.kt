@@ -1,21 +1,18 @@
 package com.itgonca.rentit.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.itgonca.rentit.R
 import com.itgonca.rentit.databinding.ActivityMainBinding
-import com.itgonca.rentit.ui.compose.screens.home.HomeScreen
 import com.itgonca.rentit.ui.compose.theme.RentItTheme
+import com.itgonca.rentit.ui.feature.MainScreen
 import com.itgonca.rentit.ui.viewmodel.HomeViewModel
 import com.itgonca.rentit.utils.view.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,13 +31,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getListLocations()
         //WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
+
             //val email by viewModel.email.collectAsState()
             //val password by viewModel.password.collectAsState()
             //val step by viewModel.step.collectAsState()
-            val listLocations by viewModel.listLocations.collectAsState()
+            //val listLocations by viewModel.listLocations.collectAsState()
             RentItTheme {
                 /*LoginScreen(
                     email = email,
@@ -50,9 +48,10 @@ class MainActivity : ComponentActivity() {
                     onPasswordChange = { viewModel.onPasswordChange(it) },
                     onStepChange = { viewModel.onStepChange(it) }
                 )*/
-                HomeScreen(viewModel.getFilters(),listLocations) {
+                /*HomeScreen(viewModel.getFilters(),listLocations) {
                     Log.i("TAG", "onSearh: $it ")
-                }
+                }*/
+               MainScreen(listFilters = viewModel.getFilters(), onQueryChange ={} )
             }
         }
         /*binding = ActivityMainBinding.inflate(layoutInflater)

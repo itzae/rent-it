@@ -36,9 +36,9 @@ val Red40 = Color(0x66EC6B6C)
 val Red20 = Color(0x33EC6B6C)
 
 val RentItLightColors = lightColors(
-    primary = Blue100,
-    onPrimary = Color.White,
-    secondary = Color.White,
+    primary = Color.White,
+    onPrimary = Color.Black,
+    secondary = Blue100,
     onSecondary = Color.White,
     error = Red100,
     onError = Color.White,

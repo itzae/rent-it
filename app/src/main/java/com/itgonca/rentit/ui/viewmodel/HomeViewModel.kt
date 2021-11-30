@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
 import com.itgonca.rentit.data.remote.model.Location
-import com.itgonca.rentit.domain.repository.FirebaseAuthRepository
 import com.itgonca.rentit.domain.repository.FirebaseDatabaseRepository
 import com.itgonca.rentit.utils.functional.Failure
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,21 +13,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val databaseRepository: FirebaseDatabaseRepository,
-    private val firebaseAuthRepository: FirebaseAuthRepository
-) :
+class HomeViewModel @Inject constructor(private val databaseRepository: FirebaseDatabaseRepository) :
     ViewModel() {
 
     private var _listLocations = MutableStateFlow<List<Location>>(emptyList())
     val listLocations: StateFlow<List<Location>> get() = _listLocations
 
-
-    private fun login() {
-        viewModelScope.launch {
-            firebaseAuthRepository.login("itzaeg@gmail.com", "chay9403")
-            //result.eitther(::handleLoginError, ::handleLoginSuccess)
-        }
+    init {
+        getListLocations()
     }
 
     fun getListLocations() {
@@ -49,7 +41,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val result = databaseRepository.updateFavoriteLocation(idUser, idLocation, isFavorite)
             result.eitther(::errorUpdate, ::completeUpdate)
-
         }
     }
 

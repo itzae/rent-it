@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/StudioProjects/RentIt/app/src/main/res/drawable/ic_favorite_regular.xml" value="0.37864583333333335" />
+        <entry key="..\:/StudioProjects/RentIt/app/src/main/res/drawable/ic_favorites.xml" value="0.18981481481481483" />
+        <entry key="..\:/StudioProjects/RentIt/app/src/main/res/drawable/ic_home.xml" value="0.18981481481481483" />
+        <entry key="..\:/StudioProjects/RentIt/app/src/main/res/drawable/ic_user.xml" value="0.18981481481481483" />
         <entry key="..\:/StudioProjects/RentIt/app/src/main/res/layout/fragment_login.xml" value="0.36666666666666664" />
       </map>
     </option>

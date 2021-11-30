@@ -31,11 +31,11 @@ import com.itgonca.rentit.ui.compose.theme.Red100
 import com.itgonca.rentit.ui.compose.theme.RentItTheme
 
 @Composable
-fun LodgingItem(location: Location) {
+fun LodgingItem(location: Location, onFavoriteClick: (Boolean) -> Unit) {
     var isFavoriteLocation by remember {
         mutableStateOf(location.favorite)
     }
-    Column(modifier = Modifier.padding(bottom = 8.dp)) {
+    Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)) {
         Box {
             Image(
                 painter = painterResource(id = R.drawable.image_lodging),
@@ -55,7 +55,10 @@ fun LodgingItem(location: Location) {
                 style = MaterialTheme.typography.caption.copy(color = Color.White)
             )
             IconButton(
-                onClick = { isFavoriteLocation = !isFavoriteLocation },
+                onClick = {
+                    isFavoriteLocation = !isFavoriteLocation
+                    onFavoriteClick(isFavoriteLocation)
+                },
                 modifier = Modifier.align(Alignment.TopEnd)
             ) {
                 Image(
@@ -109,12 +112,18 @@ fun LodgingRowItem(location: Location) {
     var isFavoriteLocation by remember {
         mutableStateOf(location.favorite)
     }
-    Box(modifier = Modifier.size(280.dp,150.dp).padding(end = 8.dp)) {
+    Box(
+        modifier = Modifier
+            .size(280.dp, 150.dp)
+            .padding(start = 16.dp)
+    ) {
         Image(
             painter = painterResource(id = R.drawable.image_lodging),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
-            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(5.dp))
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(5.dp))
         )
 
         Text(
@@ -175,7 +184,7 @@ fun LodgingRowItem(location: Location) {
 @Composable
 fun LodgingItemCard() {
     RentItTheme {
-        LodgingItem(Location(1, "Suny apartment", 233.0, "", 12))
+        LodgingItem(Location(1, "Suny apartment", 233.0, "", 12), {})
     }
 }
 

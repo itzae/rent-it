@@ -22,7 +22,7 @@ fun FilterChip(filter: String, onExecuteChange: (String) -> Unit) {
     Surface(
         modifier = Modifier.padding(end = 8.dp),
         shape = MaterialTheme.shapes.medium,
-        color = if (isSelectedChip) MaterialTheme.colors.primary else LightGrey40
+        color = if (isSelectedChip) MaterialTheme.colors.secondary else LightGrey40
     ) {
         Row(
             modifier = Modifier
