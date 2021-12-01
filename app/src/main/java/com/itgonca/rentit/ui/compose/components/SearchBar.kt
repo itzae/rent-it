@@ -72,7 +72,8 @@ fun SearchBar(
 fun SearchBarWithButton(
     state: EditableInputState = rememberEditableInputState(hint = ""),
     listFilters: List<String>,
-    isFilterBarShow: Boolean = true
+    isFilterBarShow: Boolean = true,
+    onFiltersClick: () -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -85,7 +86,7 @@ fun SearchBarWithButton(
             ) {
 
                 IconButton(
-                    onClick = {},
+                    onClick = { onFiltersClick() },
                     modifier = Modifier
                         .padding(start = 8.dp)
                         .clip(RoundedCornerShape(50.dp))
@@ -101,7 +102,7 @@ fun SearchBarWithButton(
                 }
                 SearchBar(state = state)
             }
-            if(isFilterBarShow)
+            if (isFilterBarShow)
                 SearchFilters(
                     listFilters = listFilters, modifier = Modifier
                         .fillMaxWidth()
@@ -135,7 +136,9 @@ fun SearchBarWithButtonStart() {
                 "Filtro 3",
                 "Filtro 4"
             )
-        )
+        ){
+
+        }
     }
 }
 

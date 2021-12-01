@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.itgonca.rentit.R
+import com.itgonca.rentit.ui.compose.components.ModalFiltersBottomSheet
 import com.itgonca.rentit.ui.compose.components.SearchBarWithButton
 import com.itgonca.rentit.ui.compose.state.rememberEditableInputState
 import com.itgonca.rentit.ui.compose.theme.Blue100
@@ -28,7 +29,9 @@ import com.itgonca.rentit.ui.navigation.BottomBarScreens
 import com.itgonca.rentit.ui.navigation.BottomNavGraph
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @Composable
 fun MainScreen(
     listFilters: List<String>,
@@ -37,7 +40,9 @@ fun MainScreen(
     val navController = rememberNavController()
     val searchBarState =
         rememberEditableInputState(hint = stringResource(id = R.string.search_city_label))
-
+    val modalBottomSheetState =
+        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    val scope = rememberCoroutineScope()
     var isFilterBarShow by remember {
         mutableStateOf(true)
     }
@@ -56,33 +61,39 @@ fun MainScreen(
             }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                backgroundColor = Color.White,
-                elevation = 0.dp,
-                modifier = Modifier.height(appBarSize)
-            ) {
-                SearchBarWithButton(
-                    searchBarState,
-                    listFilters = listFilters,
-                    isFilterBarShow = isFilterBarShow
-                )
-            }
-        },
-        content = { innerPadding ->
-            BottomNavGraph(navController = navController, innerPadding)
-        },
-        bottomBar = {
-            BottomBar(
-                navController = navController
-            ) { currentDestination ->
-                isFilterBarShow = when (currentDestination?.route) {
-                    BottomBarScreens.Home.route -> true
-                    else -> false
+    ModalFiltersBottomSheet(scope = scope, modalBottomSheetState = modalBottomSheetState) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    backgroundColor = Color.White,
+                    elevation = 0.dp,
+                    modifier = Modifier.height(appBarSize)
+                ) {
+                    SearchBarWithButton(
+                        searchBarState,
+                        listFilters = listFilters,
+                        isFilterBarShow = isFilterBarShow
+                    ) {
+                        scope.launch {
+                            modalBottomSheetState.show()
+                        }
+                    }
                 }
-            }
-        })
+            },
+            content = { innerPadding ->
+                BottomNavGraph(navController = navController, innerPadding)
+            },
+            bottomBar = {
+                BottomBar(
+                    navController = navController
+                ) { currentDestination ->
+                    isFilterBarShow = when (currentDestination?.route) {
+                        BottomBarScreens.Home.route -> true
+                        else -> false
+                    }
+                }
+            })
+    }
 }
 
 @Composable
@@ -135,6 +146,7 @@ fun RowScope.AddItem(
     )
 }
 
+@ExperimentalMaterialApi
 @Preview(name = "MainScreenPreview", showBackground = true)
 @Composable
 fun MainScreenPreview() {
