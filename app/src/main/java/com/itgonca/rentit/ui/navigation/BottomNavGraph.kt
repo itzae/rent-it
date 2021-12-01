@@ -15,7 +15,10 @@ import com.itgonca.rentit.ui.compose.screens.home.HomeScreen
 import com.itgonca.rentit.ui.viewmodel.HomeViewModel
 
 @Composable
-fun BottomNavGraph(navController: NavHostController, innerPaddingValues: PaddingValues) {
+fun BottomNavGraph(
+    navController: NavHostController,
+    innerPaddingValues: PaddingValues
+) {
     val viewModel: HomeViewModel = hiltViewModel()
     val listLocations by viewModel.listLocations.collectAsState()
     NavHost(navController = navController, startDestination = BottomBarScreens.Home.route) {
@@ -23,7 +26,9 @@ fun BottomNavGraph(navController: NavHostController, innerPaddingValues: Padding
             HomeScreen(
                 listLocations = listLocations,
                 modifier = Modifier.padding(innerPaddingValues)
-            )
+            ) { id, isFavorite ->
+                viewModel.updateFavorite(id, isFavorite)
+            }
         }
         composable(route = BottomBarScreens.Favorites.route) {
             val listLocationsFavorites = listLocations.filter { it.favorite }
@@ -31,9 +36,11 @@ fun BottomNavGraph(navController: NavHostController, innerPaddingValues: Padding
             FavoritesScreen(
                 modifier = Modifier.padding(innerPaddingValues),
                 listLocations = listLocationsFavorites
-            )
+            ) { id, isFavorite ->
+                viewModel.updateFavorite(id, isFavorite)
+            }
         }
-        composable(route = BottomBarScreens.Chat.route){}
-        composable(route = BottomBarScreens.Profile.route){}
+        composable(route = BottomBarScreens.Chat.route) {}
+        composable(route = BottomBarScreens.Profile.route) {}
     }
 }

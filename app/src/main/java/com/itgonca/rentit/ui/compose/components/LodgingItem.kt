@@ -31,7 +31,7 @@ import com.itgonca.rentit.ui.compose.theme.Red100
 import com.itgonca.rentit.ui.compose.theme.RentItTheme
 
 @Composable
-fun LodgingItem(location: Location, onFavoriteClick: (Boolean) -> Unit) {
+fun LodgingItem(location: Location, onFavoriteClick: (Int, Boolean) -> Unit) {
     var isFavoriteLocation by remember {
         mutableStateOf(location.favorite)
     }
@@ -57,7 +57,7 @@ fun LodgingItem(location: Location, onFavoriteClick: (Boolean) -> Unit) {
             IconButton(
                 onClick = {
                     isFavoriteLocation = !isFavoriteLocation
-                    onFavoriteClick(isFavoriteLocation)
+                    onFavoriteClick(location.id, isFavoriteLocation)
                 },
                 modifier = Modifier.align(Alignment.TopEnd)
             ) {
@@ -184,7 +184,7 @@ fun LodgingRowItem(location: Location) {
 @Composable
 fun LodgingItemCard() {
     RentItTheme {
-        LodgingItem(Location(1, "Suny apartment", 233.0, "", 12), {})
+        LodgingItem(Location(1, "Suny apartment", 233.0, "", 12)) { _, _ -> }
     }
 }
 

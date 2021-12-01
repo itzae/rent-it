@@ -20,15 +20,19 @@ import com.itgonca.rentit.ui.compose.components.LodgingRowItem
 import com.itgonca.rentit.ui.compose.theme.RentItTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, listLocations: List<Location>) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    listLocations: List<Location>,
+    onUpdateItem: (Int, Boolean) -> Unit
+) {
 
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
     ) {
         items(listLocations) {
-            LodgingItem(it) {
-
+            LodgingItem(it) { id, isFavorite ->
+                onUpdateItem(id, isFavorite)
             }
         }
         item {
@@ -57,7 +61,7 @@ fun HomeScreenPreview() {
         HomeScreen(
             modifier = Modifier,
             listOf(Location(id = 1, name = "Example Location", price = 150.0))
-        )
+        ) { _, _ -> }
     }
 }
 

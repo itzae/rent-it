@@ -15,7 +15,11 @@ import com.itgonca.rentit.data.remote.model.Location
 import com.itgonca.rentit.ui.compose.components.LodgingItem
 
 @Composable
-fun FavoritesScreen(modifier: Modifier = Modifier, listLocations: List<Location>) {
+fun FavoritesScreen(
+    modifier: Modifier = Modifier,
+    listLocations: List<Location>,
+    onUpdateItem: (Int, Boolean) -> Unit
+) {
     LazyColumn(content = {
         item {
             Text(
@@ -25,8 +29,8 @@ fun FavoritesScreen(modifier: Modifier = Modifier, listLocations: List<Location>
             )
         }
         items(listLocations) {
-            LodgingItem(it) {
-
+            LodgingItem(it) { id, isFavorite ->
+                onUpdateItem(id, isFavorite)
             }
         }
     }, modifier = modifier.fillMaxSize())

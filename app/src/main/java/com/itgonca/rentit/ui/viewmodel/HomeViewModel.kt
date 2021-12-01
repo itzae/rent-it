@@ -3,6 +3,7 @@ package com.itgonca.rentit.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.itgonca.rentit.data.remote.model.Location
 import com.itgonca.rentit.domain.repository.FirebaseDatabaseRepository
@@ -13,7 +14,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val databaseRepository: FirebaseDatabaseRepository) :
+class HomeViewModel @Inject constructor(
+    private val databaseRepository: FirebaseDatabaseRepository,
+    private val auth: FirebaseAuth
+) :
     ViewModel() {
 
     private var _listLocations = MutableStateFlow<List<Location>>(emptyList())
@@ -37,13 +41,9 @@ class HomeViewModel @Inject constructor(private val databaseRepository: Firebase
         }
     }
 
-    fun getFavoritesLocations(){
-
-    }
-
-    fun updateFavorite(idUser: String, idLocation: Int, isFavorite: Boolean) {
+    fun updateFavorite( idLocation: Int, isFavorite: Boolean) {
         viewModelScope.launch {
-            val result = databaseRepository.updateFavoriteLocation(idUser, idLocation, isFavorite)
+            val result = databaseRepository.updateFavoriteLocation(auth.currentUser?.uid ?: "", idLocation, isFavorite)
             result.eitther(::errorUpdate, ::completeUpdate)
         }
     }

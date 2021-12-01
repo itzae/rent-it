@@ -76,6 +76,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateFavoriteLocation(idLocation: Int, isFavorite: Boolean) {
-        homeViewModel.updateFavorite(firebaseUser.currentUser?.uid ?: "anonimo", idLocation, isFavorite)
+        homeViewModel.updateFavorite( idLocation, isFavorite)
     }
 }
